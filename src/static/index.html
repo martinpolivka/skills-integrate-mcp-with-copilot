@@ -13,6 +13,38 @@
     </header>
 
     <main>
+      <section id="auth-container">
+        <h3>Account Access</h3>
+        <p id="auth-status">Not signed in</p>
+        <button id="logout-btn" class="hidden" type="button">Sign Out</button>
+
+        <h4>Create Student Account</h4>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="register-email">Student Email:</label>
+            <input type="email" id="register-email" required placeholder="your-email@mergington.edu" />
+          </div>
+          <div class="form-group">
+            <label for="register-password">Password:</label>
+            <input type="password" id="register-password" minlength="8" required placeholder="Minimum 8 characters" />
+          </div>
+          <button type="submit">Register</button>
+        </form>
+
+        <h4>Sign In</h4>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" required placeholder="your-email@mergington.edu" />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" required placeholder="Your password" />
+          </div>
+          <button type="submit">Sign In</button>
+        </form>
+      </section>
+
       <section id="activities-container">
         <h3>Available Activities</h3>
         <div id="activities-list">
@@ -23,11 +55,8 @@
 
       <section id="signup-container">
         <h3>Sign Up for an Activity</h3>
+        <p>Use your signed-in account to register for activities.</p>
         <form id="signup-form">
-          <div class="form-group">
-            <label for="email">Student Email:</label>
-            <input type="email" id="email" required placeholder="your-email@mergington.edu" />
-          </div>
           <div class="form-group">
             <label for="activity">Select Activity:</label>
             <select id="activity" required>

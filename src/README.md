@@ -5,7 +5,9 @@ A super simple FastAPI application that allows students to view and sign up for 
 ## Features
 
 - View all available extracurricular activities
-- Sign up for activities
+- Register and sign in as a student
+- Sign up for activities as an authenticated user
+- Admin-only student unregister actions
 
 ## Getting Started
 
@@ -27,10 +29,30 @@ A super simple FastAPI application that allows students to view and sign up for 
 
 ## API Endpoints
 
-| Method | Endpoint                                                          | Description                                                         |
-| ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
-| GET    | `/activities`                                                     | Get all activities with their details and current participant count |
-| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| GET | `/activities` | Get all activities with their details and current participant count |
+| POST | `/auth/register` | Create a student account with email/password |
+| POST | `/auth/login` | Authenticate and receive a bearer token |
+| POST | `/auth/logout` | Invalidate current bearer token |
+| GET | `/auth/me` | Return authenticated user profile (email + role) |
+| POST | `/activities/{activity_name}/signup` | Sign up current authenticated user for an activity |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Admin-only unregister for a specific student |
+
+## Authentication
+
+- Use bearer token auth for protected endpoints:
+
+   ```
+   Authorization: Bearer <token>
+   ```
+
+- Demo admin account (in-memory only):
+
+   ```
+   email: admin@mergington.edu
+   password: admin123
+   ```
 
 ## Data Model
 

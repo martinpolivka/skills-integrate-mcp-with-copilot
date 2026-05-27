@@ -1,15 +1,21 @@
-"""
-High School Management System API
+"""High School Management System API.
 
-A super simple FastAPI application that allows students to view and sign up
-for extracurricular activities at Mergington High School.
+This FastAPI application lets users view activities and supports authenticated
+signup/unregister flows with simple role-based access control.
 """
 
-from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
+import base64
+import hashlib
+import hmac
 import os
+import secrets
 from pathlib import Path
+from typing import Literal
+
+from fastapi import FastAPI, Header, HTTPException
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 app = FastAPI(title="Mergington High School API",
               description="API for viewing and signing up for extracurricular activities")
@@ -78,6 +84,56 @@ activities = {
 }
 
 
+class AuthRequest(BaseModel):
+    email: str
+    password: str
+
+
+class RegisterRequest(AuthRequest):
+    role: Literal["student", "admin"] = "student"
+
+
+def _hash_password(password: str, salt: bytes) -> str:
+    digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 120_000)
+    return base64.b64encode(digest).decode("ascii")
+
+
+def _new_user(password: str, role: str) -> dict:
+    salt = os.urandom(16)
+    return {
+        "salt": base64.b64encode(salt).decode("ascii"),
+        "password_hash": _hash_password(password, salt),
+        "role": role,
+    }
+
+
+# In-memory user + session storage for demo purposes.
+users = {
+    "admin@mergington.edu": _new_user("admin123", "admin"),
+}
+sessions = {}
+
+
+def _get_current_user(authorization: str | None) -> tuple[str, dict]:
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    scheme, _, token = authorization.partition(" ")
+    if scheme.lower() != "bearer" or not token:
+        raise HTTPException(status_code=401, detail="Invalid Authorization header format")
+
+    email = sessions.get(token)
+    if not email or email not in users:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    return email, users[email]
+
+
+def _require_admin(user_email: str):
+    if users[user_email]["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Admin role required")
+
+
 @app.get("/")
 def root():
     return RedirectResponse(url="/static/index.html")
@@ -88,9 +144,60 @@ def get_activities():
     return activities
 
 
+@app.post("/auth/register")
+def register(payload: RegisterRequest):
+    email = payload.email.lower()
+    if len(payload.password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+
+    if payload.role == "admin":
+        raise HTTPException(status_code=403, detail="Admin registration is not self-service")
+
+    if email in users:
+        raise HTTPException(status_code=400, detail="User already exists")
+
+    users[email] = _new_user(payload.password, payload.role)
+    return {"message": "User registered", "email": email, "role": users[email]["role"]}
+
+
+@app.post("/auth/login")
+def login(payload: AuthRequest):
+    email = payload.email.lower()
+    user = users.get(email)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    salt = base64.b64decode(user["salt"])
+    expected_hash = user["password_hash"]
+    received_hash = _hash_password(payload.password, salt)
+    if not hmac.compare_digest(expected_hash, received_hash):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    token = secrets.token_urlsafe(32)
+    sessions[token] = email
+    return {"token": token, "email": email, "role": user["role"]}
+
+
+@app.post("/auth/logout")
+def logout(authorization: str | None = Header(default=None)):
+    _, _, token = (authorization or "").partition(" ")
+    if token in sessions:
+        del sessions[token]
+    return {"message": "Logged out"}
+
+
+@app.get("/auth/me")
+def me(authorization: str | None = Header(default=None)):
+    email, user = _get_current_user(authorization)
+    return {"email": email, "role": user["role"]}
+
+
 @app.post("/activities/{activity_name}/signup")
-def signup_for_activity(activity_name: str, email: str):
-    """Sign up a student for an activity"""
+def signup_for_activity(activity_name: str, authorization: str | None = Header(default=None)):
+    """Sign up the authenticated user for an activity."""
+    email, _ = _get_current_user(authorization)
+    email = email.lower()
+
     # Validate activity exists
     if activity_name not in activities:
         raise HTTPException(status_code=404, detail="Activity not found")
@@ -111,8 +218,16 @@ def signup_for_activity(activity_name: str, email: str):
 
 
 @app.delete("/activities/{activity_name}/unregister")
-def unregister_from_activity(activity_name: str, email: str):
-    """Unregister a student from an activity"""
+def unregister_from_activity(
+    activity_name: str,
+    email: str,
+    authorization: str | None = Header(default=None),
+):
+    """Admin-only endpoint to unregister a student from an activity."""
+    actor_email, _ = _get_current_user(authorization)
+    _require_admin(actor_email)
+    email = email.lower()
+
     # Validate activity exists
     if activity_name not in activities:
         raise HTTPException(status_code=404, detail="Activity not found")
