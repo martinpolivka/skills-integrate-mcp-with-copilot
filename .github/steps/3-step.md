@@ -49,7 +49,7 @@ The issue backlog is piling up. Let’s finally tackle one, but which deserves o
    > #codebase Let's do the first one. Follow these steps:
    > 1. Checkout a new local branch for making our changes.
    > 2. Make the changes then confirm with me that they look correct.
-   > 3. Push the changes and create a pull request.
+   > 3. Push the changes to my fork. Do not create a pull request.
    > ```
 
    > ⚠️ **Warning:** Always verify the the actions Copilot is asking to perform, especially with the external abilities provided by an MCP server, which probably have no undo option.

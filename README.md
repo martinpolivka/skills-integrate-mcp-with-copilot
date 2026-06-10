@@ -7,14 +7,14 @@ _Learn how to give GitHub Copilot more tools to expand the capabilities of your 
 - **Who is this for**: Developers looking to enhance their AI-assisted workflows, GitHub Copilot users, and AI enthusiasts.
 - **What you'll learn**: We'll introduce MCP basics, a GitHub MCP server setup, and integration with Copilot Agent Mode.
 - **What you'll build**: A mixed development workflow that uses GitHub Copilot to manage issues while upgrading the extracurricular activities website for Mergington High School.
-- **Prerequisites**: [Getting Started with Copilot](https://github.com/martinpolivka/skills-getting-started-with-github-copilot) Exercise
+- **Prerequisites**: Getting Started with Copilot exercise
 - **How long**: This exercise takes less than one hour to complete.
 
 ### Local prerequisites
 
 Before you start, make sure your computer has:
 
-- [Git](https://git-scm.com/) and access to push branches to this repository.
+- [Git](https://git-scm.com/) and a GitHub.com account that can fork this public repository.
 - [Visual Studio Code](https://code.visualstudio.com/) with the GitHub Copilot and GitHub Copilot Chat extensions installed.
 - GitHub Copilot access for your GitHub account, with Copilot Chat, Agent Mode, and MCP enabled by your organisation policy.
 - Access to the GitHub MCP server endpoint at `https://api.githubcopilot.com/mcp/`.
@@ -32,7 +32,7 @@ In this exercise, you will:
 
 ### How to start this exercise
 
-Before making any changes, create your own branch. Use a branch name that identifies you, for example `participant/<your-name>`.
+Before making any changes, fork this repository to your own GitHub account. Do not create branches or commit directly in the original repository. Create your participant branch in your fork. Use a branch name that identifies you, for example `participant/<your-name>`.
 
 Continue with [Step 1](.github/steps/1-step.md).
 

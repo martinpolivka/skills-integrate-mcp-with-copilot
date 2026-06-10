@@ -2,7 +2,7 @@
 
 <img width="150" align="right" alt="copilot logo" src="https://github.com/user-attachments/assets/4d22496d-850b-4785-aafe-11cba03cd5f2" />
 
-In the [Getting Started with GitHub Copilot](https://github.com/martinpolivka/skills-getting-started-with-github-copilot) exercise, we were introduced to the Mergington High School's extracurricular activities website, which allowed students to sign up for events.
+In the previous Getting Started with GitHub Copilot exercise, we were introduced to the Mergington High School's extracurricular activities website, which allowed students to sign up for events.
 
 And now we have a problem... but.. it's a good one! More teachers are asking to use it! 🎉
 
@@ -41,21 +41,21 @@ graph LR
 
 Before we dive into MCP, let's start up our development environment and refamiliarise ourself with the extracurricular activity application.
 
-1. Clone this repository to your machine.
+1. Fork this repository to your own GitHub account.
 
-   [![Clone in VS Code](https://img.shields.io/badge/Clone%20in-VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](vscode://vscode.git/clone?url=https://github.com/martinpolivka/skills-integrate-mcp-with-copilot.git)
+   Do not create branches or commit directly in the original repository. All workshop changes should stay in a branch in your fork.
 
-   Or use the terminal:
+1. Clone your fork to your machine.
 
    ```bash
-   # Clone the prepared workshop repository and enter its folder.
-   git clone https://github.com/martinpolivka/skills-integrate-mcp-with-copilot.git
+   # Clone your fork of this prepared workshop repository and enter its folder.
+   git clone https://github.com/<your-github-username>/skills-integrate-mcp-with-copilot.git
    cd skills-integrate-mcp-with-copilot
    ```
 
 1. Open the cloned repository in VS Code.
 
-1. Before making changes, create your own participant branch.
+1. Before making changes, create your own participant branch in your fork.
 
    ```bash
    # Create a participant branch for your lab work.
@@ -142,7 +142,7 @@ Before we dive into MCP, let's start up our development environment and refamili
 
    <img width="350" alt="image" src="https://github.com/user-attachments/assets/99178d1b-adbe-4cf4-ab9c-3a4d29918a13" />
 
-1. **Commit** and **push** the `.vscode/mcp.json` file to your `participant/<your-name>` branch.
+1. **Commit** and **push** the `.vscode/mcp.json` file to your `participant/<your-name>` branch in your fork.
 
 > [!NOTE]
 > The next steps will involve creating GitHub issues. If you would like to avoid notification emails, you can unwatch the repository.
@@ -153,7 +153,7 @@ Before we dive into MCP, let's start up our development environment and refamili
 Make sure:
 
 - Your `.vscode/mcp.json` file is similar to the example provided.
-- You pushed the changes to your `participant/<your-name>` branch.
+- You pushed the changes to your `participant/<your-name>` branch in your fork.
 
 </details>
 
