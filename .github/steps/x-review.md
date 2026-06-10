@@ -11,6 +11,10 @@ Here's a recap of what you learned:
 - **GitHub Repository Research**: Searching for and analyzing similar projects using MCP capabilities
 - **Issue Management & Implementation**: Triaging, creating, and managing GitHub issues through Copilot, then having Copilot solve issues for you
 
+### Final workshop handoff
+
+Open a pull request from your `participant/<your-name>` branch in your fork to the `main` branch of the original `martinpolivka` repository. Do not merge the pull request yourself. The workshop instructor will review and approve it.
+
 ### What's next?
 
 Check out these resources to learn more or get involved:
