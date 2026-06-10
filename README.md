@@ -32,7 +32,7 @@ In this exercise, you will:
 
 ### How to start this exercise
 
-Before making any changes, fork this repository to your own GitHub account. Do not create branches or commit directly in the original `martinpolivka` repository. Create your participant branch in your fork. Use a branch name that identifies you, for example `participant/<your-name>`.
+Before making any changes, fork this repository to your own GitHub account. Do not create branches, commit, open pull requests, or merge changes in the original `martinpolivka` repository. Create your participant branch in your fork. Use a branch name that identifies you, for example `participant/<your-name>`.
 
 Continue with [Step 1](.github/steps/1-step.md).
 

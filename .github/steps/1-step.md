@@ -43,7 +43,7 @@ Before we dive into MCP, let's start up our development environment and refamili
 
 1. Fork this repository to your own GitHub account.
 
-   Do not create branches or commit directly in the original `martinpolivka` repository. All workshop changes should be made in a branch in your fork, then submitted back with a pull request.
+   Do not create branches, commit, open pull requests, or merge changes in the original `martinpolivka` repository. All workshop changes should stay in a branch in your fork.
 
 1. Clone your fork to your machine.
 
