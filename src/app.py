@@ -5,7 +5,10 @@ A super simple FastAPI application that allows students to view and sign up
 for extracurricular activities at Mergington High School.
 """
 
+from typing import Literal
+
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 import os
@@ -18,6 +21,16 @@ app = FastAPI(title="Mergington High School API",
 current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")
+
+
+class OrganizerTaskCreate(BaseModel):
+    title: str
+    description: str
+    status: Literal["To Do", "In Progress", "Done"]
+
+
+class OrganizerTask(OrganizerTaskCreate):
+    id: int
 
 # In-memory activity database
 activities = {
@@ -77,15 +90,66 @@ activities = {
     }
 }
 
+organizer_tasks = [
+    {
+        "id": 1,
+        "title": "Confirm fall club fair schedule",
+        "description": "Finalize the room assignments and volunteer coverage for the club fair.",
+        "status": "To Do"
+    },
+    {
+        "id": 2,
+        "title": "Review robotics supply request",
+        "description": "Check the budget request before sending it to the activities office.",
+        "status": "In Progress"
+    },
+    {
+        "id": 3,
+        "title": "Publish spring activity flyer",
+        "description": "Share the approved flyer with students and parents through the school newsletter.",
+        "status": "Done"
+    }
+]
+
 
 @app.get("/")
 def root():
     return RedirectResponse(url="/static/index.html")
 
 
+@app.get("/organizer")
+def organizer_dashboard():
+    return RedirectResponse(url="/static/organizer.html")
+
+
 @app.get("/activities")
 def get_activities():
     return activities
+
+
+@app.get("/tasks")
+def get_tasks():
+    return organizer_tasks
+
+
+@app.post("/tasks", response_model=OrganizerTask)
+def create_task(task: OrganizerTaskCreate):
+    next_id = max((item["id"] for item in organizer_tasks), default=0) + 1
+    task_record = {
+        "id": next_id,
+        "title": task.title.strip(),
+        "description": task.description.strip(),
+        "status": task.status,
+    }
+
+    if not task_record["title"]:
+        raise HTTPException(status_code=400, detail="Task title is required")
+
+    if not task_record["description"]:
+        raise HTTPException(status_code=400, detail="Task description is required")
+
+    organizer_tasks.append(task_record)
+    return task_record
 
 
 @app.post("/activities/{activity_name}/signup")
