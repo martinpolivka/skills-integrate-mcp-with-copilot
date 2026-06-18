@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mergington High School Organizer Task Board</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Mergington High School</h1>
+      <h2>Organizer Task Board</h2>
+      <nav class="page-nav">
+        <a class="nav-link" href="/static/index.html">Student View</a>
+        <a class="nav-link current" href="/organizer">Organizer View</a>
+      </nav>
+    </header>
+
+    <main class="organizer-layout">
+      <section class="organizer-panel">
+        <h3>Create Organizer Task</h3>
+        <form id="task-form">
+          <div class="form-group">
+            <label for="task-title">Task Title:</label>
+            <input id="task-title" type="text" required placeholder="Confirm club fair schedule" />
+          </div>
+          <div class="form-group">
+            <label for="task-description">Task Description:</label>
+            <textarea id="task-description" required placeholder="Add the task details organizers need to act on"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="task-status">Status:</label>
+            <select id="task-status" required>
+              <option value="To Do">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+          <button type="submit">Create Task</button>
+        </form>
+        <div id="task-message" class="hidden"></div>
+      </section>
+
+      <section class="board-panel board-wrapper">
+        <h3>Organizer Workflow</h3>
+        <div class="task-board" id="task-board">
+          <div class="board-column">
+            <h4>To Do</h4>
+            <div class="task-column" id="todo-column">
+              <p class="empty-state">Loading tasks...</p>
+            </div>
+          </div>
+          <div class="board-column">
+            <h4>In Progress</h4>
+            <div class="task-column" id="in-progress-column"></div>
+          </div>
+          <div class="board-column">
+            <h4>Done</h4>
+            <div class="task-column" id="done-column"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Mergington High School</p>
+    </footer>
+
+    <script src="organizer.js"></script>
+  </body>
+</html>

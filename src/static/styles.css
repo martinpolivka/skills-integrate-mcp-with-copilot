@@ -28,6 +28,29 @@ header h1 {
   margin-bottom: 10px;
 }
 
+.page-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-link.current,
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
 main {
   display: flex;
   flex-wrap: wrap;
@@ -141,12 +164,18 @@ section h3 {
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
+}
+
+.form-group textarea {
+  min-height: 110px;
+  resize: vertical;
 }
 
 button {
@@ -190,6 +219,71 @@ button:hover {
 
 .hidden {
   display: none;
+}
+
+.organizer-layout {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.organizer-panel,
+.board-panel {
+  max-width: none;
+}
+
+.board-wrapper {
+  width: 100%;
+}
+
+.task-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.board-column {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.board-column h4 {
+  color: #1a237e;
+  margin-bottom: 12px;
+}
+
+.task-column {
+  display: grid;
+  gap: 12px;
+}
+
+.task-card {
+  border: 1px solid #d7d7d7;
+  border-left: 4px solid #3949ab;
+  border-radius: 5px;
+  padding: 12px;
+  background-color: white;
+}
+
+.task-card h5 {
+  color: #0066cc;
+  margin-bottom: 8px;
+}
+
+.task-card p {
+  margin-bottom: 8px;
+}
+
+.task-status {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1a237e;
+}
+
+.empty-state {
+  color: #666;
+  font-style: italic;
 }
 
 footer {
